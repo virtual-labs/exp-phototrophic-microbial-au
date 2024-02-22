@@ -1,4 +1,3 @@
-### Aim of the experiment
 
 · To learn about the design considerations for Phototropic Microbial Fuel Cell
 
