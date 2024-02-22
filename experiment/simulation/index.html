@@ -1,325 +1,448 @@
 <!DOCTYPE html>
 <html>
-  <style>
-    div{
-        padding-right :0%;
-        color: black;
-        background-color: transparent;
-        text-align: left;
-        margin-top: 1%;
-        font-size: 18px;
-    }
-    .div2{
-        padding :0;
-        color: black;
-        font-size: 18px;
-    }
-    .mydiv{
-      margin-left: 5%;
-    }
-    .mydiv1{
-      margin-left: 50%;
-      margin-top: -155px;
-    }
-
-    label {
-      background-color: rgb(181,3,70);
-        color: white;
-        padding: 5px;
-        font-family: sans-serif;
-        font-size: 18px;
-        cursor: pointer;
-        width: 100px;
-        height:30px;
-        border-radius:50px;
-        position:relative;
-        cursor:pointer;
-        line-height:12px;
-    }
-    input:hover + label{
-        background-color: #3E0719;
-        opacity:1;
-        transition: 0.3s opacity ease-in-out;
-        filter:blur(0px);
-    }
-    .float-container {
-
-        padding: 0px;
-    }
-    button {
-        background-color: rgb(181,3,70);
-        color: white;
-        padding: 5px;
-        font-family: sans-serif;
-        font-size: 18px;
-        cursor: pointer;
-        width: 150px;
-        height:30px;
-        border-radius:50px;
-        position:relative;
-        cursor:pointer;
-        line-height:12px;
-    }
-    .div1{
-      background-color: rgb(57, 49, 83);
-        color: white;
-        padding: 5px;
-        font-family: sans-serif;
-        font-size: 18px;
-        cursor: default;
-        width: 200px;
-        height:25px;
-        border-radius:0px;
-        position:relative;
-       
-        line-height:13px;
-       text-align: center;
-       margin-left: 300px;
-       
-       vertical-align: top;
-    }
-    .solid {border-style: solid;}
-
-    .content {
+	<style>
         
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.2s ease-out;
-        background-color: white;
-        border: black;
-        color: black;
-        font-size: 18px;
-        
-    }
-    
-    div.at-container {
-        display: flex;
-    }
-    .at-item {
-        color: #4f2037; font-weight:bold; font-size:45px;
-      justify-content: center;
-      text-decoration-color:#4f2037;  
-      position: relative;
-      align-items: center;
-      margin-left: 5%;
-    }
-    hr 
-		{
-				position: relative;
-				top: 0px;
-				border: none;
-				height: 2px;
-				background: #d737a5;
-				margin-bottom: 0px;
-		}
-
-    
-</style>
-  <head>
-    <meta charset="UTF-8">
-    <title>Clinvar</title>
-  </head>
-  <body style="background-color:white">
-    <div class='at-container'>
-        <img src="images\logo.png" width="300" height="100" style="margin-left:1%;">&nbsp;&nbsp;&nbsp;&nbsp;
-        <div class='at-item' >Browsing genetic variation databases such as dbSNP, ClinVar </div>
-    </div>
-    <br> 
-    <form method="GET">
-      
-      <div style="background-color:#f0eaea;padding:15px;margin-left: 5%;margin-right: 5%;"><br><br>
-        <div class="mydiv">
-          <b> Select a database:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <select id="database">
-          <option value="clinvar" >Clin Var</option>
-          <option value="dbSNP"disabled>dbSNP</option>
-        </select>
-        <br>
-        <br>
-     <b>Enter a Gene Name:</b>&nbsp;&nbsp;&nbsp;&nbsp;
-      <input type="text" id="gene-name" name="gene-name" placeholder="eg. BRCA1, FGFR3 ">&nbsp;&nbsp;&nbsp;&nbsp;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      <button type="submit" id="submit-btn">Submit</button>
-      </div>
-  
-    </form>
-    
-
-    <div id="result"></div>
-    <div id="demo"></div>
-    <div id="demo1"></div>
-    <div id="demo2"></div>
-
-    <script>
-      const form = document.querySelector('form');
-      const resultDiv = document.querySelector('#result');
-
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const geneName = document.querySelector('#gene-name').value;
-        if (geneName === '') {
-        alert('Please enter a Gene name.');
-        return;
-      }
-        /*const variantType = document.querySelector('#variant-type').value;
-        const variantPosition = document.querySelector('#variant-position').value;*/
-
-       // document.getElementById("result").insertAdjacentHTML('beforeend', geneName);
-
-        const url = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=clinvar&term=${geneName}[gene]&retmax=500&retmode=json`
-        
-        try {
-          const response = await fetch(url);
-          const data = await response.json();
-         // document.getElementById("demo").insertAdjacentHTML('beforeend', data);
-          
-          // if (!data || !data.result || !data.result.records || data.result.records.length ==='') {
-          //   resultDiv.innerHTML = 'No ClinVar data found for the given input';
-          //   return;
-          // }
-
-          const record = data.esearchresult.idlist;
-
-          
-        
-          resultDiv.innerHTML = `<div class="mydiv1"><br><b>Variation Id:</b><br><textarea id="record"name="record" rows="10" cols="50">
-                  ${record}
-                </textarea><br><br><br></div>
-                <hr/>  <br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;         
-               
-              <b> Enter a Variation Id:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" id="gene-id" name="gene-id">&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" name="search" id="search"  onclick="id_search()" hidden/><label for="search">&nbsp;&nbsp;&nbsp;&nbsp;Search&nbsp;&nbsp;&nbsp;&nbsp;</label>
-
-                
-          `;
-
-        } catch (error) {
-          resultDiv.innerHTML = `An error occurred: ${error}`;
+		div{
+			padding :0;
+			color: black;
+            background-color: transparent;
+            text-align: center;
+            margin-top: 1%;
         }
-      });
-      //document.getElementById("demo").innerHTML =
-      async function id_search() {
-        const geneID = document.querySelector('#gene-id').value;
-        const resultDiv1 = document.querySelector('#demo1');
-        const url1 = `https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esummary.fcgi?db=clinvar&id=${geneID}&retmode=json`;
-
-        try {
-          const response1 = await fetch(url1);
-          const data1 = await response1.json();
-          
-          const uid = data1.result[data1.result.uids[0]].uid;
-          const obj_type=  data1.result[data1.result.uids[0]].obj_type;
-          const accession =data1.result[data1.result.uids[0]].accession;
-          const accession_version= data1.result[data1.result.uids[0]].accession_version;
-          const title= data1.result[data1.result.uids[0]].title;
-          const measure_id= data1.result[data1.result.uids[0]].variation_set[0].measure_id;
-          const variation_name= data1.result[data1.result.uids[0]].variation_set[0].variation_name;
-          const assembly_name= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[0].assembly_name;
-          const chr= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[0].chr;
-          const band= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[0].band;
-          const stop= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[0].stop;
-          const assembly_acc_ver= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[0].assembly_acc_ver;
-          const assembly_name1= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[1].assembly_name;
-          const chr1= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[1].chr;
-          const stop1= data1.result[data1.result.uids[0]].variation_set[0].variation_loc[1].stop;
-          const canonical_spdi= data1.result[data1.result.uids[0]].variation_set[0].canonical_spdi;
-          //const db_source= data1.result[data1.result.uids[0]].variation_set[0].variation_xrefs[0].db_source;
-          const description= data1.result[data1.result.uids[0]].clinical_significance.description;
-          const last_evaluated= data1.result[data1.result.uids[0]].clinical_significance.last_evaluated;
-          const protein_change= data1.result[data1.result.uids[0]].protein_change;
-
-
-          //console.log(record1)
-          resultDiv1.innerHTML = `<form method="GET">
-            <div style="background-color:#cfbcbc;padding:15px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <h2> ${title}</h2>
-
-              <table>
-                <tr>
-                  <td><b>Interpretation:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${description}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Last evaluated:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${last_evaluated}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Accession:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${accession}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Variation ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${uid}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${obj_type}</td>
-                </tr>
-
-
-              </table>
-
-              <div class="div1"><br>Variant details</div>
-
-              <p style="font-size:16px"><b> ${title}</b></p>
-              <table>
-                <tr>
-                  <td><b>Allele ID:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${measure_id}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Variant type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${obj_type}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Cytogenetic location:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${band}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Genomic location:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${chr}:${stop}&nbsp;(${assembly_name})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${assembly_name}</td>
-                  
-                  <tr>
-                    <td></td>
-                    <td>${chr1}:${stop1}&nbsp;(${assembly_name1})&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${assembly_name1}</td>
-                    
-                  </tr>
-                </tr>
-
-                <tr>
-                  <td><b>HGVS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td><b>Nucleotide</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${variation_name}</td>
-                  
-                </tr>
-                
-                <tr>
-                  
-                  <td><b>Protein change:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td><br>${protein_change}</td>
-                </tr>
-
-                <tr>
-                  <td><b>Canonical SPDI:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>
-                  <td>${canonical_spdi}</td>
-                </tr>             
-              </table>
-              <br>
-              <a href="index.html"><input type="button"  id="Reset"  hidden/><label  for="Reset">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reset &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label></a>
-                     
-              `;
-             
-        } catch (error) {
-          resultDiv1.innerHTML = `Please enter a valid Gene Id`;
+        label {
+            display: inline-block;
+            padding: 0.6em;
+            border: 1px solid #ccc;
+            text-align: left;
+            background-color: #802652;
+            font-weight: bold;
+            width: 30%;
+            color: white;
+            font-size: 1vw;
+            
         }
+        
+        .at-item {
+		    color: #4f2037; font-weight:bold; font-size:3vw;		
+            justify-content: center;
+		    text-decoration-color:#4f2037;  
+		    position: relative;
+            align-items: center;         	
+            margin-left: 2%;
+            
+	    }
+        div.at-container {
+		    display: flex;
+        }
+        input:hover + label{
+            background-color: #802652;
+            opacity:1;
+            transition: 0.3s opacity ease-in-out;
+            filter:blur(0px);
+        }
+        table, th, td {
+            border: 0px solid black;
+        }
+        .custom-select {
+            width: 50%;
+  padding: 0.6em;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  font-size: 1vw;
+  font-weight: normal;
+  background-color: rgb(228, 109, 155);
+        }
+
+
+.custom-select {
+background-color: rgb(255, 255, 255);
+}
+
+.custom-select option:checked {
+background-color: #ddd;
+}
+#center {  
+float: right;  
+padding-left: 10%;
+
+}  
+#topview{
+    padding-top: 15%;
+    float: right;  
+padding-right: 10%;
+
+}
+#bulb{
+    padding-top: 15%;
+    float: right;  
+left: -100%;
+}
+h2{
+    padding-top: 60%;
+    padding-left: 40%;
+    font-size: 1vw;
+    font-weight: bold;
+}
+h_3{
+    padding-top: 5%;
+    padding-left: 40%;
+    padding-bottom: 100%;
+    font-size: 1vw;
+    font-weight: bold;
+}
+.chartContainer{
+    height:1%; 
+    width: 80%;
+    margin-left: 15%;
+    font-size: 1vw;
+}
+
+
        
-      }
-    
-      
+    </style>
+    <head>
+	    <meta charset="utf-8">
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <script src="https://cdn.canvasjs.com/canvasjs.min.js"></script>
+    </head>
+    <body style="background-color:white">
+        <br>
+        <div class='at-container'>
+            <img src="images\logo.png" width="10%" height="1%" style= "margin-top: 1%;" >
+            
+        <div class='at-item' >Phototrophic Microbial Fuel Cell using <i>Chroococcus</i> species</div>
+        </div>
+        <br>
+        <br>              
+            <div class="main-container">     
+            <table style="width:100%;">
+                <tr>
+                <td style="width:50%">   
+                
+                <div class="select-anolyte">
+                    <label for="anolyte">&nbsp;<b>Select Anolyte:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>&nbsp;&nbsp;&nbsp;
+                        <select name="selectAnolyte" id= "selectAnolyte"class="custom-select mb-3" onchange="myFunction()">
+                            <option value="Sewage" >Sewage water with <i>Chroococcus</i> species</option>
+                            <option value="ETP" >ETP water with <i>Chroococcus</i> species</option>
+                            <option value="anolyte" selected>Select Anolyte</option>
+                        </select>
+                </div>
+                
+                <div class="select-catholyte">
+                    <label for="catholyte">&nbsp;<b>Select Catholyte:&nbsp;&nbsp;&nbsp;&nbsp;</b></label>&nbsp;&nbsp;&nbsp;
+                        <select name="selectCatholyte" class="custom-select mb-3">
+                            <option value="KMnO4" selected>KMnO4</option>
+                        </select>
+                </div>
+                </td>
+                <td style="width:50%;padding-right: 0%; ">
+                    <div class="select-cathode">
+                        <label for="cathode">&nbsp;<b>Select Cathode:&nbsp;&nbsp;&nbsp;&nbsp;</b></label>&nbsp;&nbsp;&nbsp;
+                            <select name="selectCathode" id = "selectCathode"class="custom-select mb-3"  onchange="cathode()">
+                                <option value="Copper" >Copper</option>
+                                <option value="Graphite">Graphite</option>
+                                <option value="Cathode" selected>Select Cathode</option>
+                            </select>
+                    </div>
+
+                    <div class="select-anode">
+                        <label for="anode">&nbsp;<b>Select Anode:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></label>&nbsp;&nbsp;&nbsp;
+                            <select name="selectAnode" id="selectAnode" class="custom-select mb-3"  >
+                                <option value="Aluminium" selected>Aluminium</option>
+                                <option value="Manganese" >Manganese</option>
+                                <option value="Steel">Stainless steel</option>
+                                <option value="anode" selected>Select Anode</option>
+                            </select>
+                    </div>
+                </td>
+                
+            </tr>
+            </table>
+            <br><a href="index.html"><input type="button" id="Reset" hidden><label style="text-align: center;width: 20%;" for="Reset">&nbsp;&nbsp;<b>Reset</b>&nbsp;&nbsp;</label></a>
+                
+                            
+           
+            </div>
+                        
+            <p id="blank1"></p>
+            
+            <p id="demo"></p>
+            <p id="form"></p>
+            <p id="cathode"></p>
+            <p id="anode"></p>
+            
+            <div class="chartContainer" id="chartContainer" ></div>
+    </body>
+    <script >
+        // JavaScript code
+        document.getElementById("blank1").insertAdjacentHTML('beforeend'," <table style=\"width:100%\"align=\"center\"><tr><td  style=\"width:50%\"> <figure><img id = \"center\" src=\"images\\blank.png\" alt=\"Side view of the experiment\" width=\"100%\" height=\"100%\" align=\"center\"><h2> Side view of the experiment</h2</figure></td><td style=\"width:50%\"> <img id = \"topview\"src=\"images\\blank_top.png\"width=\"90%\" height=\"100%\" align=\"center\"><br><h_3> Top view of the experiment</h_3></td>")
+
+
+        function myFunction() {
+            // var connection= document.getElementById("mySelect");
+            // document.getElementById("demo").innerHTML =connection;
+            if(document.getElementById("selectAnolyte").value== "Sewage"){
+                document.getElementById("demo").insertAdjacentHTML('beforeend'," <table style=\"width:100%\"align=\"center\"><tr><td  style=\"width:50%\"> <figure><img id = \"center\" src=\"images\\champer_s_offb_1.png\" alt=\"Side view of the experiment\" width=\"100%\" height=\"100%\" align=\"center\"><h2> Side view of the experiment</h2</figure></td><td style=\"width:50%\"> <img id = \"topview\"src=\"images\\topview_s.png\"width=\"90%\" height=\"100%\" align=\"center\"><br><h_3> Top view of the experiment</h_3></td>")
+                    document.getElementById("blank1").style.display="none";  
+                   
+            
+                }
+            else if (document.getElementById("selectAnolyte").value== "ETP"){
+                document.getElementById("form").insertAdjacentHTML('beforeend'," <table style=\"width:100%\"align=\"center\"><tr><td  style=\"width:50%\"> <figure><img id = \"center\" src=\"images\\champer_grn_bulb_1.png\" alt=\"Side view of the experiment\" width=\"100%\" height=\"100%\" align=\"center\"><h2> Side view of the experiment</h2</figure></td><td style=\"width:50%\"> <img id = \"topview\"src=\"images\\topview_1.png\"width=\"90%\" height=\"100%\" align=\"center\"><br><h_3> Top view of the experiment</h_3></td>")
+                    document.getElementById("demo").style.display="none";  
+                    document.getElementById("blank1").style.display="none";  
+            }
+            
+        
+        }
+        document.addEventListener('DOMContentLoaded', function () {
+           // var selectConnection = document.getElementById('selectConnection');
+            var selectCathode = document.getElementById('selectCathode');
+            var selectAnode = document.getElementById('selectAnode');
+
+            // Event listener for selectConnection change
+            selectCathode.addEventListener('change', function () {
+                // Clear previous options
+                //selectCathode.innerHTML = '';
+                selectAnode.innerHTML = '';
+
+                // Get selected value
+                var selectedCathode = selectCathode.value;
+
+                // Add options based on selected value
+                if (selectedCathode === 'Copper') {
+                    // Add options for parallel connection
+                    addOption(selectCathode, 'graphite', 'Graphite');
+                    addOption(selectAnode, 'Aluminium', 'Aluminium');
+                    addOption(selectAnode, 'Manganese', 'Manganese');
+                    addOption(selectAnode, 'Graphite', 'Graphite');
+                    addOption(selectAnode, 'Steel', 'Stainless steel');
+                } else if (selectedCathode === 'Graphite') {
+                    // Add options for series connection
+                    //addOption(selectCathode, 'Cathode', 'Cathode');
+                   // addOption(selectAnode, 'Aluminium', 'Aluminium');
+                    addOption(selectAnode, 'Manganese', 'Manganese');
+                    //addOption(selectAnode, 'Graphite', 'Graphite');
+                   // addOption(selectAnode, 'Steel', 'Stainless steel');
+                }
+            });
+
+            // Function to add options to a select element
+            function addOption(selectElement, text, value) {
+                var option = document.createElement('option');
+                option.textContent = text;
+                option.value = value;
+                selectElement.appendChild(option);
+                //document.getElementById("anode").innerHTML =option;
+            }
+            
+        });
+
+        function cathode(){
+            /*var cathode=[];
+            var anolyte=[];
+            var selectAnolyte= document.getElementById('selectAnolyte');
+            for(var k=0; k<selectAnolyte.options.length;k++){
+                anolyte.push(selectAnolyte.options[k].value);
+            }
+
+            var selectcathode= document.getElementById('selectCathode');
+            for(var i=0; i<selectcathode.options.length;i++){
+            cathode.push(selectcathode.options[i].value);
+            }
+
+            
+            for (var j=0; j<cathode.length; j++){
+            for(var h=0; h<anolyte.length;h++)
+            {*/
+                if( document.getElementById("selectAnolyte").value== "Sewage" && document.getElementById("selectCathode").value== "Copper" ){
+                    document.getElementById("cathode").insertAdjacentHTML('beforeend'," <table style=\"width:100%\"align=\"center\"><tr><td  style=\"width:50%\"> <figure><img id = \"center\" src=\"images\\chpr_alu_s_y_b.png\" alt=\"Side view of the experiment\" width=\"100%\" height=\"100%\" align=\"center\"><h2> Side view of the experiment</h2</figure></td><td style=\"width:50%\"> <img id = \"topview\"src=\"images\\topview_s_alu.png\"width=\"90%\" height=\"100%\" align=\"center\"><br><h_3> Top view of the experiment</h_3></td><br>")
+                        document.getElementById("demo").style.display="none"; 
+                        
+                       
+                       //document.getElementById("anode").style.display="none"; 
+                     //  break;  
+                     var chart = new CanvasJS.Chart("chartContainer", {
+                            animationEnabled: true,
+                            zoomEnabled: true,
+                            theme: "white",
+                            title: {
+                                text: "Polarisation Curve Graphs"
+                            },
+                            axisX: {
+                                title: "Current Density (mA/m2)",
+                                valueFormatString: "####",
+                                interval: 0
+                            },
+                            axisY: {
+                                title: "Voltage (V)",
+                                titleFontColor: "#0838b2",
+                                lineColor: "#0838b2",
+                                gridThickness: 0,
+                                lineThickness: 1,
+                                //labelFormatter: addSymbols,
+                                interval: 0.5
+                            },
+                            axisY2: {
+                                title: "Power Density (mW/m2)",
+                                titleFontColor: "#9a1229",
+                                logarithmic: false, //change it to true
+                                lineColor: "#9a1229",
+                                gridThickness: 0,
+                                lineThickness: 1,
+                                interval: 20
+                                //labelFormatter: addSymbols
+                            },
+                            legend: {
+                                verticalAlign: "top",
+                                fontSize: 12,
+                                dockInsidePlotArea: true
+                            },
+                            data: [{
+                                type: "line",
+                                xValueFormatString: "####",
+                                showInLegend: true,
+                                name: "Current density Vs  Voltage",
+                                dataPoints: [
+                                    { x: 0, y: 1},
+                                    { x:200, y: 0.6},
+                                    { x: 400, y: 0.3 },
+                                    { x: 600, y: 0.1 },
+                                    { x: 800, y: 0.05 },
+                                    { x: 1000, y: 0 },
+                                    { x: 1200, y: 0 },
+                                ]
+                            },
+                            {
+                                type: "line",
+                                xValueFormatString: "####",
+                                axisYType: "secondary",
+                                showInLegend: true,
+                                name: "Power Density vs Current Density",
+                                dataPoints: [
+                                    { x: 0, y: 0 },
+                                    { x: 200, y:130 },
+                                    { x: 400, y: 120},
+                                    { x: 600, y: 75},
+                                    { x: 800, y: 35},
+                                    { x: 1000, y: 15 },
+                                    { x: 1200, y: 0},
+                                    
+                                    
+                                ]
+                            }]
+                        });
+                        chart.render();
+                        
+                }
+                
+                
+                else if(document.getElementById("selectAnolyte").value== "ETP" && document.getElementById("selectCathode").value== "Copper" ){
+                    document.getElementById("anode").insertAdjacentHTML('beforeend'," <table style=\"width:100%\"align=\"center\"><tr><td  style=\"width:50%\"> <figure><img id = \"center\" src=\"images\\chpr_alu_2_y_b.png\" alt=\"Side view of the experiment\" width=\"100%\" height=\"100%\" align=\"center\"><h2> Side view of the experiment</h2</figure></td><td style=\"width:50%\"> <img id = \"topview\"src=\"images\\top_view_alu.png\"width=\"80%\" height=\"100%\" align=\"center\"><br><h_3> Top view of the experiment</h_3></td><br><br>")
+                       document.getElementById("demo").style.display="none"; 
+                       document.getElementById("cathode").style.display="none"; 
+                       document.getElementById("form").style.display="none"; 
+                       
+                       
+                            var chart1 = new CanvasJS.Chart("chartContainer", {
+	                        animationEnabled: true,
+	                        zoomEnabled: true,
+	                        theme: "white",
+	                title: {
+		text: "Polarisation Cure Graphs"
+	},
+	axisX: {
+		title: "Current Density (mA/m2)",
+		valueFormatString: "####",
+		interval: 200
+	},
+	axisY: {
+		title: "Voltage (V)",
+		titleFontColor: "#0838b2",
+		lineColor: "#0838b2",
+		gridThickness: 0,
+		lineThickness: 1,
+		//labelFormatter: addSymbols,
+        interval: 0.2
+	},
+	axisY2: {
+		title: "Power Density (MW/m2)",
+		titleFontColor: "#9a1229",
+		logarithmic: false, //change it to true
+		lineColor: "#9a1229",
+		gridThickness: 0,
+		lineThickness: 1,
+        interval: 20
+		//labelFormatter: addSymbols
+	},
+	legend: {
+		verticalAlign: "top",
+		fontSize: 12,
+		dockInsidePlotArea: true
+	},
+	data: [{
+		type: "line",
+		xValueFormatString: "####",
+		showInLegend: true,
+		name: "Current density Vs  Voltage",
+		dataPoints: [
+        { x: 0, y: 1},
+        { x:200, y: 0.5},
+        { x: 400, y: 0.25 },
+        { x: 600, y: 0.1 },
+        { x: 800, y: 0.05 },
+        { x: 1000, y: 0 },
+			
+		]
+	},
+	{
+		type: "line",
+		xValueFormatString: "####",
+		axisYType: "secondary",
+		showInLegend: true,
+		name: "Power Density vs Current Density",
+		dataPoints: [
+        { x: 0, y: 0},
+        { x:200, y: 115},
+        { x: 400, y: 110 },
+        { x: 600, y: 60},
+        { x: 800, y: 20 },
+        { x: 1000, y: 0 },
+			
+			
+		]
+	}]
+});
+                       }
+chart1.render();
+                       
+                      
+                     // break;
+
+                }
+               // break;   
+            
+            //break;
+        
+        
+            //document.getElementById("anode").innerHTML =cathode; 
+
+            
+
+/*function addSymbols(e) {
+	var suffixes = ["", "K", "M", "B", "T"];
+
+	var order = Math.max(Math.floor(Math.log(Math.abs(e.value)) / Math.log(1000)), 0);
+	if(order > suffixes.length - 1)
+		order = suffixes.length - 1;
+
+	var suffix = suffixes[order];
+	return CanvasJS.formatNumber(e.value / Math.pow(1000, order), "#,##0.##") + suffix;
+}*/
+
+
+        
+       
     </script>
-  </body>
+
 </html>
