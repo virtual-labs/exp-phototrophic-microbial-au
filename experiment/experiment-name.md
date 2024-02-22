@@ -1,1 +1,1 @@
-## Experiment name
+## Phototrophic Microbial Fuel Cell using Chroococcus sp
