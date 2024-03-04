@@ -30,10 +30,10 @@
     {
       "question": "3) What is the voltage measured when the anolyte is ETP water with Chrococcus species, the Catholyte is KMN04, the Anode is Aluminum, and the Cathode is Copper ?",
       "answers": {
-        "a": "2V",
-        "b": "5V",
-        "c": "9V",
-        "d": "7V"
+        "a": "0.2V",
+        "b": "0.15V",
+        "c": "1.08V",
+        "d": "1.18V"
       },
       
       "correctAnswer": "c",
