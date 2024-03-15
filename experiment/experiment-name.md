@@ -1,1 +1,1 @@
-## Phototrophic Microbial Fuel Cell using Chroococcus sp
+## Phototrophic Microbial Fuel Cell using *Chroococcus sp*
