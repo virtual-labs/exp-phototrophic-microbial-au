@@ -11,12 +11,12 @@
 <img src="images/12.png" title="" />
 &nbsp;
  
-2.	The selection choice for Anolyte is sewage water with Chroococcus sp. and ETP water with Chroococcus sp. Catholyte is fixed as KMO4. Options for cathode are Copper and Graphite and anode options are Aluminium, Manganese, and Stainless steel. 
+2.	The selection choice for Anolyte is sewage water with *Chroococcus* sp. and ETP water with *Chroococcus* sp. Catholyte is fixed as KMO4. Options for cathode are Copper and Graphite and anode options are Aluminium, Manganese, and Stainless steel. 
  
 <img src="images/13.png" title="" />
 &nbsp;
 
-3.	To work out the simulator, as an example, Anolyte is selected as Sewage water with Chroococcus species, Catholyte as KM04, Cathode as Copper, and Anode as Aluminium. The user can observe the MFC chamber filled with sewage water inoculated with Chrococcus species. The electrode selection can also be visible in the chamber. The side view of the experiment and the top view of the experiment are also displayed. After the selection of input parameters, users can observe the glowing of the bulb connected to the MFC representing the bioelectricity production, and can read the voltage as 1.180 V. 
+3.	To work out the simulator, as an example, Anolyte is selected as Sewage water with *Chroococcus* species, Catholyte as KM04, Cathode as Copper, and Anode as Aluminium. The user can observe the MFC chamber filled with sewage water inoculated with Chrococcus species. The electrode selection can also be visible in the chamber. The side view of the experiment and the top view of the experiment are also displayed. After the selection of input parameters, users can observe the glowing of the bulb connected to the MFC representing the bioelectricity production, and can read the voltage as 1.180 V. 
 Note: Aluminium and Copper are selected as electrodes as it is affordable and copper has a difference in the redox potential that favors the flow of electrons. 
 
 <img src="images/14.png" title="" />
@@ -39,7 +39,7 @@ From the graph, the user can find the maximum power density (Pmax) and Current d
 <img src="images/18.png" title="" />
 &nbsp;
 
-6.	Change the parameters as Anolyte is selected as ETP water with Chroococcus species, Catholyte as KM04, Cathode as Copper, and Anode as Aluminium. The user can observe the MFC chamber filled with ETP water inoculated with Chrococcus species. After connection, users can see the glow of the bulb connected to the MFC representing the bioelectricity production. The voltage can be read from the attached voltmeter as 1.08V
+6.	Change the parameters as Anolyte is selected as ETP water with *Chroococcus* species, Catholyte as KM04, Cathode as Copper, and Anode as Aluminium. The user can observe the MFC chamber filled with ETP water inoculated with Chrococcus species. After connection, users can see the glow of the bulb connected to the MFC representing the bioelectricity production. The voltage can be read from the attached voltmeter as 1.08V
  
 <img src="images/19.png" title="" />
 &nbsp;
